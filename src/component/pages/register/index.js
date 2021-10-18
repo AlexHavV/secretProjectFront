@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -8,7 +8,7 @@ import { authUser } from '../../../action/auth';
 import TextInput from '../../common/input';
 import Checkbox from '../../common/checkbox';
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const formikRef = useRef();
@@ -18,14 +18,21 @@ const LoginPage = () => {
                 innerRef={formikRef}
                 initialValues={{
                     email: '',
-                    password: ''
+                    userName: '',
+                    password: '',
+                    acceptedTerms: false
                 }}
                 validationSchema={Yup.object({
                     password: Yup.string()
                         .required('Password is required'),
+                    userName: Yup.string()
+                        .required('User name is required'),  
                     email: Yup.string()
                         .email('Invalid email address')
-                        .required('Email is required') 
+                        .required('Email is required'),
+                    acceptedTerms: Yup.boolean()
+                        .required('')
+                        .oneOf([true], 'You must accept our mailing list.')
                 })}
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
@@ -33,9 +40,11 @@ const LoginPage = () => {
 
                         formData.append("email", values.email);
                         formData.append("password", values.password);
+                        formData.append("userName", values.userName);
+                        formData.append("acceptedTerms", values.acceptedTerms);
 
                         //console.log("Form Data",formData);
-                        const res = await userService.login(formData);
+                        const res = await userService.register(formData);
 
                         const { token } = res.data;
                         localStorage.authToken = token;
@@ -49,9 +58,16 @@ const LoginPage = () => {
             >
                 <div>
                     <div className="display-4 text-center">
-                      <p className="m-1">Login Page</p>
+                      <p className="m-1">Register Page</p>
                     </div>
                     <Form>
+                        <TextInput
+                            label="User Name"
+                            name="userName"
+                            type="string"
+                            placeholder="Benis"
+                        />
+
                         <TextInput
                             label="Email Address"
                             name="email"
@@ -66,9 +82,11 @@ const LoginPage = () => {
                             placeholder="●●●●●●●●"
                         />
     
+                        <Checkbox id="acceptedTerms" name="acceptedTerms">
+                            I accept mailing list of THE FRESHEST PIZZAS of da world
+                        </Checkbox>
                         <div className="center">
-                            <button type="submit" className="display-4 btn-submit btn-medium-size round m-3">E-Login</button>                            
-                            <Link type="submit" className="display-6 washed-up-blue btn-submit btn-small-size round center" to="/register">E-Register</Link>
+                            <button type="submit" className="display-4 btn-submit btn-medium-size round">E-Register</button>
                         </div>
                     </Form>
                 </div>
@@ -77,4 +95,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;

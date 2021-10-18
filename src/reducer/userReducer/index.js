@@ -1,4 +1,4 @@
-import {REGISTER_AUTH, LOGIN_AUTH} from "../../action/action"
+import {REGISTER_AUTH, LOGIN_AUTH, LOGOUT} from "../../action/action"
 
 const initialState = {
     isAuth: false, 
@@ -22,6 +22,9 @@ function userReducer(state = initialState, action) {
                     "phoneNumber": userData.phoneNumber
                 }
             }
+        }
+        case LOGOUT: {
+            return initialState;
         }
         default: {
             return state;

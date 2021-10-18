@@ -1,7 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './component/header'
 import Login from './component/pages/login';
+import Register from './component/pages/register';
+import SearchPage from './component/pages/search';
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -17,16 +18,16 @@ class App extends Component {
       <div className="container">
         <Switch>
           <Route exact path="/">
-            {/* <Home /> */}
+            <SearchPage />
           </Route>
           <Route exact path="/register">
-            {/* <Register /> */}
+            <Register />
           </Route>
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/users">
-            {/* <UsersPage /> */}
+          <Route exact path="/profile">
+            {/* <Profile /> */}
           </Route>
         </Switch>
       </div>
