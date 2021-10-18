@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Header from './component/header'
+import Login from './component/pages/login';
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -22,7 +23,7 @@ class App extends Component {
             {/* <Register /> */}
           </Route>
           <Route exact path="/login">
-            {/* <Login /> */}
+            <Login />
           </Route>
           <Route exact path="/users">
             {/* <UsersPage /> */}
