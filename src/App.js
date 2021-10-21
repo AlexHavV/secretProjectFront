@@ -1,8 +1,10 @@
 import './App.css';
 import Header from './component/header'
 import Login from './component/pages/login';
+import ProfilePage from './component/pages/profile';
 import Register from './component/pages/register';
 import SearchPage from './component/pages/search';
+import CartPage from './component/pages/cart';
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -27,7 +29,10 @@ class App extends Component {
             <Login />
           </Route>
           <Route exact path="/profile">
-            {/* <Profile /> */}
+            <ProfilePage />
+          </Route>
+          <Route exact path="/cart">
+            <CartPage />
           </Route>
         </Switch>
       </div>

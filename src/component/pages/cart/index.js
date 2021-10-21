@@ -1,30 +1,27 @@
 import React, { Component, useState, useEffect } from 'react'
 import { useDispatch, useSelector, connect } from 'react-redux'
-import { addToCart, searchProducts } from '../../../action/search';
 import store from '../../../store';
-import ProductBlock from './template';
+import ProductCartBlock from './template';
 import'../../../../node_modules/bootstrap/dist/css/bootstrap.css'
+import searchCartProductsData from '../../../action/cart';
 
-class SearchPage extends Component {
-
-    onCartButtonPressed(id) {
-        console.log(id);
-        addToCart(id, this.props.cartItems, store.dispatch);
-        console.log(this.props.cartItems);
+class CartPage extends Component {
+    onConfirmPurchaseButtonPressed() {
+        console.log("AAAAAAAA");
     }
 
-    componentDidMount(page = 0) {
-        searchProducts(page, "", store.dispatch);
+    componentDidMount() {
+        this.a = searchCartProductsData(this.props.cartItems);
     }
 
     render() {
-        const {pageNumber, searchParam, productList, cartItems}=this.props;
-        //console.log("Products render", this.props);
+        const {cartItems}=this.props;
+        console.log("Cart render", this.props);
         //console.log("list", typeof(productList), productList, productList.length, Object.keys(productList).length);
         //console.log("list elem 0", typeof(productList[0]), productList[0], productList.length, Object.keys(productList).length);
-
-        let res = productList.map((x) => ProductBlock(x, this.onCartButtonPressed.bind(this)));
-        //console.log(res);
+        
+        let res = cartItems.map((x) => ProductCartBlock(x, this.a.filter(y => y.id == x.id)[0]));
+        console.log(res);
 
         return (
             <div id="productLineupDiv" className="row m-4">
@@ -46,4 +43,4 @@ function mapState(stateRedux) {
     }
 }
 
-export default connect(mapState)(SearchPage);
+export default connect(mapState)(CartPage);

@@ -36,7 +36,7 @@ class Header extends Component {
                         </ul>
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <div className="input-group">
-                              <input type="text" className="form-control" placeholder="Search for Pizza" aria-label="Recipient's username" />
+                              <input type="text" className="form-control" placeholder="Search for Pizza"/>
                               <div className="input-group-append">
                                 <Link className="btn btn-outline-secondary green-text" type="button" to="/search">Search</Link>
                               </div>
