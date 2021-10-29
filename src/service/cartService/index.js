@@ -5,8 +5,16 @@ class CartService {
         return httpConfig.post("api/cart/confirmPurchase", data);
     }
 
-    searchCartProductsData(cartItems) {
-        return httpConfig.post("api/cart/searchCartProductsData", cartItems);
+    сartGetProduct(userId) {
+        return httpConfig.post("api/cart/CartGetProduct", userId);
+    }
+
+    addToCart(userId, productId) {
+        return httpConfig.post("api/cart/CartAddProduct", {'userId': userId, "productId": productId});
+    }
+    
+    removeFromCart(userId, productId, amount) {
+        return httpConfig.post("api/cart/CartRemoveProduct", {'userId': userId, "productId": productId });
     }
 }
 

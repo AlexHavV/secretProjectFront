@@ -1,7 +1,11 @@
 import cartService from "../service/cartService";
 
-export default async function searchCartProductsData(cartItems) {
-    var products = await cartService.searchCartProductsData(cartItems);
+export async function сartGetProduct(userId) {
+    var products = await cartService.сartGetProduct(userId);
     console.log("Action: Products from api", products);
     return products.data;
+}
+
+export async function сartRemoveProduct(userId, productId) {
+    await cartService.removeFromCart(userId, productId);
 }
