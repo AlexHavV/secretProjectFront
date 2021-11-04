@@ -1,12 +1,12 @@
 import httpConfig from "../../utils/http-config";
 
 class CartService {
-    confirmPurchase(data){
-        return httpConfig.post("api/cart/confirmPurchase", data);
+    confirmPurchase(userId){
+        return httpConfig.post("api/cart/ConfirmPurchase", {'userId': userId});
     }
 
     сartGetProduct(userId) {
-        return httpConfig.post("api/cart/CartGetProduct", userId);
+        return httpConfig.post("api/cart/CartGetProduct", {'userId': userId});
     }
 
     addToCart(userId, productId) {

@@ -3,45 +3,50 @@ import { useDispatch, useSelector, connect } from 'react-redux'
 import store from '../../../store';
 import ProductCartBlock from './template';
 import'../../../../node_modules/bootstrap/dist/css/bootstrap.css';
-import {сartGetProduct, сartRemoveProduct} from '../../../action/cart';
+import '../../../App.css';
+import {сartGetProduct, сartRemoveProduct, confirmOrder} from '../../../action/cart';
 
 class CartPage extends Component {
+    
     getProducts() {
-        //return {
-        //    "a": 1,
-        //    "b": 2
-        //}
-        return сartGetProduct(this.props.userData.id);
+        сartGetProduct(this.props.userData.id, store.dispatch);
     }
 
-    onConfirmPurchaseButtonPressed() {
-        console.log("AAAAAAAA", this.props.userData.id);
+    async onConfirmPurchaseButtonPressed() {
+        if(this.props.cartItems.length > 0) {    
+            console.log("Confirmed order for client " + this.props.userData.id);
+            await confirmOrder(this.props.userData.id);
+            сartGetProduct(this.props.userData.id, store.dispatch);
+        }  
+        
     }
 
-    onRemoveCartItemButtonPressed(id) {
-        сartRemoveProduct(this.props.userData.id, id);
-        this.a = this.getProducts();
+    async onRemoveCartItemButtonPressed(id) {
+        await сartRemoveProduct(this.props.userData.id, id);
+        сartGetProduct(this.props.userData.id, store.dispatch);
     }
 
     componentDidMount() {
         console.log("Mount");
+        this.getProducts();
     }
 
     render() {
-        this.a = this.getProducts();
-        console.log("Cart render", this.a);
+        const {cartItems}=this.props;
+        console.log("Cart render", cartItems);
         //console.log("list", typeof(productList), productList, productList.length, Object.keys(productList).length);
         //console.log("list elem 0", typeof(productList[0]), productList[0], productList.length, Object.keys(productList).length);
-        
-        //let res = cartItems.map((x) => ProductCartBlock(x, cartItems.filter(y => y.id == x.id)[0]));
-        //console.log(res);
-
-        return (
-            <div id="productLineupDiv" className="row m-4">
-                    {/* { 
-                        res
-                    } */}
+        let res = cartItems.length > 0 ? cartItems.map((x) => ProductCartBlock(x, this.onRemoveCartItemButtonPressed.bind(this))) :<div style={{display:'flex', alignItems:'center', justifyContent:'center', fontSize:'45px'}}>No products in cart!</div>;
+        return (<>
+            <div style={{display:'flex', alignItems:'center', justifyContent:'center', margin:'20px'}}>
+                {cartItems.length > 0 ? <button className="btn-confirm-order mb-2" onClick={this.onConfirmPurchaseButtonPressed.bind(this)}>Confirm order!</button> : <div></div>}
             </div>
+            <div id="productLineupDiv" className="row m-4">
+                    {
+                        res
+                    }
+            </div>
+            </>
         )
     }
 }
@@ -49,10 +54,7 @@ class CartPage extends Component {
 function mapState(stateRedux) {
     //console.log("stateRedux map", stateRedux);
     return {
-        pageNumber: stateRedux.productReducer.pageNumber, 
-        searchParam: stateRedux.productReducer.searchParam, 
-        productList: stateRedux.productReducer.productList, 
-        cartItems: stateRedux.productReducer.cartItems,
+        cartItems: stateRedux.cartReducer.cartItems,
         userData: stateRedux.userReducer.userData
     }
 }

@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, ADD_CART } from "../../action/action";
+import { GET_PRODUCTS, ADD_CART, CHANGE_SEARCH_PARAM } from "../../action/action";
 
 const initialState = {
     pageNumber: 0,

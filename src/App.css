@@ -70,6 +70,11 @@ body {
   align-items: center;
 }
 
+.form-check-input:checked {
+  background-color: #5762D5 !important;
+  border-color: #5762D5 !important;
+}
+
 .flex-center-column {
   display: flex;
   align-items: center;
@@ -82,6 +87,13 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: row;
+}
+
+.flex-end-column {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .round {
@@ -98,6 +110,11 @@ body {
     background-clip: border-box;
     border: 2px solid #32292F;
     border-radius: 0.25rem;
+}
+
+.input-profile {
+  min-height: 50px;
+  min-width: 800px;
 }
 
 .btn-submit,
@@ -144,6 +161,18 @@ body {
   border-radius: 10px;
 }
 
+.btn-confirm-order {
+  height: 80px;
+  width: 500px;
+  justify-content: center;
+  vertical-align: middle;
+  color: #D1E3DD;
+  background-color: #575366;
+  border: 2px solid #D1E3DD;
+  border-radius: 10px;
+}
+
+.btn-confirm-order:hover,
 .btn-add-to-cart:hover {
   color: #D1E3DD;
   background-color: #76708f;
@@ -180,6 +209,10 @@ body {
 
 .padding-top-5 {
   padding-top: 5px;
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px;
 }
 
 .App-header {

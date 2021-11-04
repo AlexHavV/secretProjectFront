@@ -7,6 +7,8 @@ import Cart from '../../images/Cart.png'
 import Door from '../../images/Door.png'
 import '../../App.css';
 import setAuthToken from '../../utils/auth-token'
+import { searchProducts } from '../../action/search'
+import store from '../../store'
 
 class Header extends Component {
     logout() {
@@ -14,8 +16,17 @@ class Header extends Component {
         this.props.dispatch({ type:"LOGOUT"});
     }
 
+    onInputChange() {
+        if(document.getElementById("flexSwitch").checked) this.onSearchTriggered();
+    }
+
+    onSearchTriggered() {
+        var input = document.getElementById("searchInput");
+        searchProducts(0, input.value , store.dispatch );
+    }
+
     render() {
-        const {isAuth, userData}=this.props;
+        const {isAuth, userData, searchParam}=this.props;
         const pagename = "Pizza Alienizza";
         console.log("Header loaded",this.props);
         return (
@@ -31,15 +42,23 @@ class Header extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <span className="nav-link active green-text" aria-current="page">Current Page Name</span>
+                                {/* <span className="nav-link active green-text" aria-current="page">Current Page Name</span> */}
                             </li>
                         </ul>
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <div className="input-group">
-                              <input type="text" className="form-control" placeholder="Search for Pizza"/>
-                              <div className="input-group-append">
-                                <Link className="btn btn-outline-secondary green-text" type="button" to="/search">Search</Link>
-                              </div>
+                                <div className="input-group" style={{paddingLeft: 30 + 'px'}}>
+                                <div className="form-check form-switch">
+                                    <input className="form-check-input" type="checkbox" id="flexSwitch"/>
+                                    <label className="form-check-label green-text" for="flexSwitch" >Search on Change</label>
+                                </div>
+                                </div>
+                                <div className="form-check"> 
+                                    <input id="searchInput" type="text" className="form-control" placeholder="Search for Pizza" onChange={this.onInputChange.bind(this)}/>
+                                </div>
+                                <div className="input-group-append">
+                                    <button className="btn btn-outline-secondary green-text" type="button" onClick={this.onSearchTriggered.bind(this)} >Search</button>
+                                </div>
                             </div>
                         </ul>
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -87,7 +106,8 @@ function mapState(stateRedux) {
     //console.log("stateRedux", stateRedux);
     return {
         isAuth: stateRedux.userReducer ? stateRedux.userReducer.isAuth : null,
-        userData: stateRedux.userReducer ? stateRedux.userReducer.userData : null
+        userData: stateRedux.userReducer ? stateRedux.userReducer.userData : null,
+        searchParam: stateRedux.productReducer.searchParam
     }
 }
 

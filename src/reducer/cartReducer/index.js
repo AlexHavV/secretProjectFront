@@ -1,4 +1,4 @@
-import { REMOVE_CART, CONFIRM_ORDER } from "../../action/action";
+import { REMOVE_CART, CONFIRM_ORDER, GET_CART_PRODUCTS_DATA } from "../../action/action";
 
 const initialState = {
     cartItems: []
@@ -7,6 +7,7 @@ const initialState = {
 function productReducer(state = initialState, action) {
     const {type, cartItems} = action;
     switch(type){
+        case GET_CART_PRODUCTS_DATA:
         case REMOVE_CART: {
             return {
                 cartItems: cartItems

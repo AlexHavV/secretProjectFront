@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import userService from '../../../service/userService';
 import { authUser } from '../../../action/auth';
 import TextInput from '../../common/input';
-import Checkbox from '../../common/checkbox';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
